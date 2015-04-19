@@ -1,5 +1,7 @@
 import os
+
 from django.utils.translation import ugettext_lazy as _
+
 
 LANGUAGE_CODE = 'de-ch'
 TIME_ZONE = 'UTC'
