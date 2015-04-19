@@ -4,7 +4,6 @@ from email.utils import parsedate as http_parse_date
 import pytz
 from django.http.response import HttpResponseNotModified
 from django.db.models import Q
-
 from webservice import models
 
 

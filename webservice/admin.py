@@ -34,7 +34,6 @@ class ContentModelInLine(admin.StackedInline):
     min_num = 1
     extra = 0
     formset = I18NFormset
-    readonly_fields = ('uuid', )
     verbose_name = _("Content")
     verbose_name_plural = _("Contents")
     inline_classes = ('collapse open',)

@@ -33,8 +33,10 @@ class TestI18NModelField(TestCase):
         i18n_field = I18NModelField(source="attribute.field_name")
         self.assertEqual(mock_attribute, i18n_field.get_attribute(mock_instance))
         self.assertEqual(2, mock_instance.attribute.get.call_count)
-        self.assertEqual(mock.call(language="de", base_model=mock_instance), mock_instance.attribute.get.call_args_list[0])
-        self.assertEqual(mock.call(language="en", base_model=mock_instance), mock_instance.attribute.get.call_args_list[1])
+        self.assertEqual(mock.call(language="de", base_model=mock_instance),
+                         mock_instance.attribute.get.call_args_list[0])
+        self.assertEqual(mock.call(language="en", base_model=mock_instance),
+                         mock_instance.attribute.get.call_args_list[1])
 
     def test_to_representation(self):
         mock_instance = mock.Mock(field_name="field_value")

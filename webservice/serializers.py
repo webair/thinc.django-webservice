@@ -55,10 +55,10 @@ class I18NModelSerializer(serializers.ModelSerializer):
             related_field = instance._meta.get_field_by_name(attribute_name)[0]
             try:
                 i18n_instance = related_field.related_model.objects.get(**{"language": request.LANGUAGE_CODE,
-                                                                   related_field.field.name: instance})
+                                                                           related_field.field.name: instance})
             except ObjectDoesNotExist:
                 i18n_instance = related_field.related_model(**{"language": request.LANGUAGE_CODE,
-                                                       related_field.field.name: instance})
+                                                               related_field.field.name: instance})
             for attr, value in data.items():
                 setattr(i18n_instance, attr, value)
             i18n_instance.save()
