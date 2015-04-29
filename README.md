@@ -7,6 +7,6 @@ Adds i18n and delta support for models to [django-restframework](http://www.djan
 
     INSTALLED_APPS = (
         ...
-        'rest\_framework',
+        'rest_framework',
     )
     
