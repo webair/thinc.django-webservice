@@ -3,7 +3,8 @@ import os
 from setuptools import setup
 from pip.req import parse_requirements
 
-pip_requirements = parse_requirements(os.path.join(os.path.dirname(os.path.dirname(__file__)), "requirements.txt"))
+module_dir = os.path.dirname(os.path.realpath(__file__))
+pip_requirements = parse_requirements(os.path.join(module_dir, "requirements.txt"), session=False)
 requirements = [str(ir.req) for ir in pip_requirements]
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
