@@ -2,6 +2,7 @@ from unittest import mock
 
 from django.test import TestCase
 from django.core.exceptions import ObjectDoesNotExist
+
 from webservice.serializers import I18NModelSerializer, I18NModelField
 from webservice.tests.mock_webservice.models import I18N, I18NContent
 

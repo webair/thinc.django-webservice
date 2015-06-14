@@ -10,4 +10,4 @@ router.register(r'I18nViewSet', StubI18NModelViewSet)
 
 urlpatterns = patterns('',
                        url(r'', include(router.urls))
-                       )
+)
