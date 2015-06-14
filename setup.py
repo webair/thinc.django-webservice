@@ -1,34 +1,28 @@
+from distutils.core import setup
 import os
+import re
 
-from setuptools import setup
-from pip.req import parse_requirements
 
-module_dir = os.path.dirname(os.path.realpath(__file__))
-pip_requirements = parse_requirements("requirements.txt", session=False)
-requirements = [str(ir.req) for ir in pip_requirements]
-with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
-    README = readme.read()
+def get_version(package):
+    """
+    Return package version as listed in `__version__` in `init.py`.
+    """
+    init_py = open(os.path.join(package, '__init__.py')).read()
+    return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
 
-# allow setup.py to be run from any path
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+
+version = get_version('webservice')
 
 setup(
-    name='django-thinc-webservice',
-    version='0.0.4',
+    name='django-webservice',
     packages=['webservice'],
-    include_package_data=True,
-    license='MIT License',
-    description='Adds i18n and delta support for models to django-rest-framework',
-    long_description=README,
-    url='https://github.com/webair/thinc.django.webservice',
+    version=version,
+    description='Extends the django restframework library for i18n and delta support',
     author='Chris Weber',
     author_email='chrisr.weber@gmail.com',
-    install_requires=[
-        'djangorestframework >= 3.1.1',
-        'Django >= 1.8',
-        'pytz >= 2014.10',
-        'django-grappelli >= 2.6.4'
-    ],
+    url='https://github.com/webair/thinc.django-webservice',
+    download_url='https://github.com/peterldowns/mypackage/tarball/0.1',
+    license='MIT License',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -43,5 +37,4 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
-    test_suite="runtests.runtests",
 )
