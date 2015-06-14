@@ -18,6 +18,7 @@ class TestI18NModelField(TestCase):
         i18n_field = I18NModelField(source="attribute.field_name")
         self.assertEqual(mock_attribute, i18n_field.get_attribute(mock_instance))
         mock_instance.attribute.get.assert_called_once_with(language="de", base_model=mock_instance)
+        self.assertTrue(False)
 
     @mock.patch('django.conf.settings.LANGUAGES', (('en', 'label'), ('de', 'label')))
     def test_get_attribute_fallback_language(self):
