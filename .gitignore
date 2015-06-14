@@ -2,7 +2,6 @@
 *.db
 *~
 .*
-
 /site/
 /htmlcov/
 /coverage/
@@ -13,3 +12,4 @@
 MANIFEST
 
 !.gitignore
+!.travis.yml
