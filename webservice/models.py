@@ -39,7 +39,7 @@ class SynchronizedModel(models.Model):
         (STATUS_PUBLISHED_DELETED, _('Published Deleted')),
     )
 
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     created = models.DateTimeField()
     updated = models.DateTimeField()
     status = models.IntegerField(choices=STATUS_CHOICES, default=STATUS_DRAFT)
