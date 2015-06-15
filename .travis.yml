@@ -8,6 +8,6 @@ install:
   - pip install coveralls
 # command to run tests
 script:
-  coverage run manage.py test
+  coverage run runtests
 after_success:
   coveralls
