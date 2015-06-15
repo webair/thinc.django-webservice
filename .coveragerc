@@ -1,0 +1,13 @@
+[run]
+omit =
+        *__init__*
+        *site-packages*
+        *tests*
+	    manage.py
+
+[html]
+omit =
+        *__init__*
+        *site-packages*
+        *tests*
+	    manage.py

@@ -12,4 +12,5 @@
 MANIFEST
 
 !.gitignore
+!.coveragerc
 !.travis.yml
