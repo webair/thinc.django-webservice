@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.test import TestCase
+from webservice.models import SynchronizedModel
 
-from webservice.tests.mock_webservice.models import SynchronizedModel, I18N, I18NContent
+from webservice.tests.mock_webservice.models import Synchronized, I18N, I18NContent
 
 
 class TestSynchronizedModel(TestCase):
     def test_create_and_update(self):
-        tm = SynchronizedModel()
+        tm = Synchronized()
         self.assertIsNone(tm.created, "not created yet")
         self.assertIsNone(tm.updated, "not updated yet")
         tm.save()
@@ -20,37 +21,47 @@ class TestSynchronizedModel(TestCase):
         self.assertNotEqual(tm.updated, updated, "updated should be changed")
 
     def test_delete_draft(self):
-        tm = SynchronizedModel()
+        tm = Synchronized()
         tm.save()
         pk = tm.pk
         tm.delete()
         self.assertIsNone(tm.pk)
-        self.assertEqual(0, SynchronizedModel.objects.filter(pk=pk).count())
+        self.assertEqual(0, Synchronized.objects.filter(pk=pk).count())
 
     def test_delete_published(self):
-        tm = SynchronizedModel(status=SynchronizedModel.STATUS_PUBLISHED)
+        tm = Synchronized(status=SynchronizedModel.STATUS_PUBLISHED)
         tm.save()
         tm.delete()
         self.assertIsNotNone(tm.pk)
-        tm = SynchronizedModel.objects.get(pk=tm.pk)
+        tm = Synchronized.objects.get(pk=tm.pk)
         self.assertEqual(SynchronizedModel.STATUS_PUBLISHED_DELETED, tm.status)
 
     def test_bulk_delete_draft(self):
         # test bulk deletion
-        tm = SynchronizedModel(test_title="model1")
+        tm = Synchronized(test_title="model1")
         tm.save()
         pk = tm.pk
-        SynchronizedModel.objects.filter(test_title="model1").delete()
-        self.assertEqual(0, SynchronizedModel.objects.filter(pk=pk).count())
+        Synchronized.objects.filter(test_title="model1").delete()
+        self.assertEqual(0, Synchronized.objects.filter(pk=pk).count())
 
     def test_bulk_delete_published(self):
         # test bulk deletion
-        tm = SynchronizedModel(test_title="model1", status=SynchronizedModel.STATUS_PUBLISHED)
+        tm = Synchronized(test_title="model1", status=SynchronizedModel.STATUS_PUBLISHED)
         tm.save()
-        SynchronizedModel.objects.filter(test_title="model1").delete()
+        Synchronized.objects.filter(test_title="model1").delete()
         self.assertIsNotNone(tm.pk)
-        tm = SynchronizedModel.objects.get(pk=tm.pk)
+        tm = Synchronized.objects.get(pk=tm.pk)
         self.assertEqual(SynchronizedModel.STATUS_PUBLISHED_DELETED, tm.status)
+
+    def test_is_deleted(self):
+        # test bulk deletion
+        tm = Synchronized(test_title="model1", status=SynchronizedModel.STATUS_PUBLISHED)
+        self.assertFalse(tm.is_deleted)
+        tm = Synchronized(test_title="model1", status=SynchronizedModel.STATUS_PUBLISHED_DELETED)
+        self.assertTrue(tm.is_deleted)
+        tm = Synchronized(test_title="model1", status=SynchronizedModel.STATUS_PUBLISHED_DRAFT)
+        self.assertTrue(tm.is_deleted)
+
 
 
 class TestI18NModel(TestCase):

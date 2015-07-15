@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
 from webservice.tests.mock_webservice import models
-from webservice.serializers import I18NModelSerializer, SYNCHRONIZED_MODEL_FIELDS
+from webservice.serializers import I18NModelSerializer, SYNCHRONIZED_MODEL_FIELDS, synchronized
 
-
+@synchronized
 class SynchronizedModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.SynchronizedModel
-        fields = SYNCHRONIZED_MODEL_FIELDS + ('test_title', )
+        model = models.Synchronized
+        fields = ('test_title', )
 
 
 class PlainI18NModelSerializer(I18NModelSerializer):

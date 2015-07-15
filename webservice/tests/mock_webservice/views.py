@@ -7,7 +7,7 @@ from webservice.views import delta_update
 
 @delta_update
 class StubSynchronizedModelViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = models.SynchronizedModel.objects.all()
+    queryset = models.Synchronized.objects.all()
     serializer_class = SynchronizedModelSerializer
     permission_classes = ()
     authentication_classes = ()

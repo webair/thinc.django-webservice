@@ -21,7 +21,7 @@ setup(
     author='Chris Weber',
     author_email='chrisr.weber@gmail.com',
     url='https://github.com/webair/thinc.django-webservice',
-    download_url='https://github.com/peterldowns/mypackage/tarball/0.1',
+    download_url='',
     license='MIT License',
     classifiers=[
         'Environment :: Web Environment',

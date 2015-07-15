@@ -67,6 +67,10 @@ class SynchronizedModel(models.Model):
         # You may want to clear out the old dict first or perform a selective merge
         self.__dict__.update(new_self.__dict__)
 
+    @property
+    def is_deleted(self):
+        return self.status in (SynchronizedModel.STATUS_PUBLISHED_DELETED, SynchronizedModel.STATUS_PUBLISHED_DRAFT)
+
 
 class I18NForeignKey(models.ForeignKey):
     def __init__(self, to, to_field=None, rel_class=models.ManyToOneRel,

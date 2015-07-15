@@ -2,7 +2,6 @@ from django.db import models
 
 from webservice.models import SynchronizedModel, ContentModel, I18NForeignKey
 
-
 class ManyToMany(models.Model):
     test_title = models.CharField(max_length=255)
 
@@ -29,6 +28,5 @@ class I18NContent(ContentModel):
     base_model = I18NForeignKey(I18N)
     content_title = models.CharField(max_length=255)
 
-
-class SynchronizedModel(SynchronizedModel):
+class Synchronized(SynchronizedModel):
     test_title = models.CharField(max_length=255, null=True, blank=True)

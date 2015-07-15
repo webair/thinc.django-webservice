@@ -2,10 +2,12 @@ from unittest import mock
 
 from django.test import TestCase
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.serializers import ModelSerializer
 
 from webservice.serializers import I18NModelSerializer, I18NModelField
-from webservice.tests.mock_webservice.models import I18N, I18NContent
-
+from webservice.tests.mock_webservice.models import I18N, I18NContent, Synchronized
+from webservice.tests.mock_webservice.serializers import SynchronizedModelSerializer
+from webservice.serializers import synchronized
 
 @mock.patch('rest_framework.serializers.Field.context',
             mock.PropertyMock(return_value={"request": mock.Mock(LANGUAGE_CODE="de")}))
@@ -130,6 +132,30 @@ class TestI18NModelSerializer(TestCase):
         serializer = StubAutoI18nFieldSerializer()
         self.assertTrue(issubclass(serializer.fields["content_title"].__class__, I18NModelField))
         self.assertEqual(serializer.fields["content_title"].source, "contents.content_title")
+
+class TestSynchronizedDecorator(TestCase):
+
+    def test_create_meta_fields(self):
+        @synchronized
+        class DeoratedSerializer(ModelSerializer):
+            class Meta:
+                model = Synchronized
+        serializer = DeoratedSerializer()
+        self.assertTrue(serializer.fields['uuid'].read_only)
+        self.assertTrue(serializer.fields['is_deleted'].read_only)
+
+    def test_append_meta_fields(self):
+        @synchronized
+        class DeoratedSerializer(ModelSerializer):
+            class Meta:
+                model = Synchronized
+                fields = ('test_title', )
+        serializer = DeoratedSerializer()
+        self.assertIn('test_title', serializer.fields)
+        self.assertTrue(serializer.fields['uuid'].read_only)
+        self.assertTrue(serializer.fields['is_deleted'].read_only)
+
+
 
 
 

@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.core.exceptions import ObjectDoesNotExist
 
 
-SYNCHRONIZED_MODEL_FIELDS = ("uuid", "status")
+SYNCHRONIZED_MODEL_FIELDS = ("uuid", "is_deleted")
 
 
 class I18NModelField(serializers.CharField):
@@ -74,3 +74,18 @@ class I18NModelSerializer(serializers.ModelSerializer):
         super(I18NModelSerializer, self).update(instance, validated_data)
         self.update_i18n_content(instance, i18n_attributes)
         return instance
+
+
+def synchronized(cls):
+    meta = getattr(cls, 'Meta', None)
+    if meta is None: 
+        meta = type('Meta', (), {})
+    fields = getattr(meta, 'fields', None)
+    if fields is None:
+        fields = list()
+    else:
+        fields = list(fields)
+    fields += SYNCHRONIZED_MODEL_FIELDS
+    setattr(meta, 'fields', fields)
+    setattr(cls, 'Meta', meta)
+    return cls
